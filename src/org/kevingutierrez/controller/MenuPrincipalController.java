@@ -5,7 +5,8 @@
  */
 package org.kevingutierrez.controller;
 
-import java.awt.Button;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -24,10 +25,12 @@ public class MenuPrincipalController implements Initializable {
     private Main stage;
     
     @FXML
+    Button btnCerrarSesion;
+    @FXML
     MenuItem btnMenuClientes, btnMenuEmpleados, btnMenuCargos, btnMenuFacturas, btnMenuTicketSoporte,btnMenuDistribuidores,
              btnMenuCategoriaProductos, btnMenuProductos, btnMenuCompras, btnMenuPromociones,
              btnRClientes, btnRProductos;
-    
+   
     @FXML
     public void handleButtonAction(ActionEvent event){
         
@@ -55,6 +58,8 @@ public class MenuPrincipalController implements Initializable {
             GenerarReporte.getInstance().generarClientes();
         }else if(event.getSource() == btnRProductos){
             GenerarReporte.getInstance().generarProductos();
+        }else if(event.getSource() == btnCerrarSesion){
+            stage.LoginView();
         }
     }
     

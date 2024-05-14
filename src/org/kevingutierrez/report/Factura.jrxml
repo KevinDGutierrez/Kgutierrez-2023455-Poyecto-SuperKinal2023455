@@ -172,7 +172,7 @@ WHERE Facturas.facturaId = $P{factId}]]>
 	<columnFooter>
 		<band height="128" splitType="Stretch">
 			<textField>
-				<reportElement x="375" y="25" width="159" height="30" uuid="bf32b905-acd9-4205-8658-d629e7cbf316"/>
+				<reportElement x="375" y="25" width="485" height="30" uuid="bf32b905-acd9-4205-8658-d629e7cbf316"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
@@ -193,7 +193,7 @@ WHERE Facturas.facturaId = $P{factId}]]>
 				<text><![CDATA[Iva  :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="375" y="55" width="100" height="30" uuid="f7bdb813-cc48-4577-9a02-fb760353d939"/>
+				<reportElement x="375" y="55" width="485" height="30" uuid="f7bdb813-cc48-4577-9a02-fb760353d939"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
@@ -207,7 +207,7 @@ WHERE Facturas.facturaId = $P{factId}]]>
 				<text><![CDATA[Total   :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="375" y="85" width="100" height="30" uuid="701e51d2-b923-4253-97a0-5e34601a95b6"/>
+				<reportElement x="375" y="85" width="485" height="30" uuid="701e51d2-b923-4253-97a0-5e34601a95b6"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>

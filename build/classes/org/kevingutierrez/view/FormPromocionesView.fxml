@@ -15,38 +15,38 @@
             <Image url="@../image/Formulario%20Promociones.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tfPromocionId" editable="false" layoutX="114.0" layoutY="156.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;">
+      <TextField fx:id="tfPromocionId" editable="false" layoutX="114.0" layoutY="156.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-radius: 10;">
          <font>
             <Font name="Arial Bold" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="tfPrecio" layoutX="126.0" layoutY="209.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;">
+      <TextField fx:id="tfPrecio" layoutX="152.0" layoutY="211.0" prefHeight="34.0" prefWidth="297.0" style="-fx-background-radius: 10;">
          <font>
             <Font name="Arial Bold" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="tfDescripcion" layoutX="167.0" layoutY="256.0" prefHeight="39.0" prefWidth="275.0" style="-fx-background-color: yellow;">
+      <TextField fx:id="tfDescripcion" layoutX="197.0" layoutY="256.0" prefHeight="39.0" prefWidth="248.0" style="-fx-background-radius: 10;">
          <font>
             <Font name="Arial Bold" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="tfFechaI" layoutX="167.0" layoutY="306.0" prefHeight="39.0" prefWidth="275.0" style="-fx-background-color: yellow;">
+      <TextField fx:id="tfFechaI" layoutX="197.0" layoutY="307.0" prefHeight="39.0" prefWidth="248.0" style="-fx-background-radius: 10;">
          <font>
             <Font name="Arial Bold" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="tfFechaF" layoutX="167.0" layoutY="356.0" prefHeight="39.0" prefWidth="275.0" style="-fx-background-color: yellow;">
+      <TextField fx:id="tfFechaF" layoutX="197.0" layoutY="356.0" prefHeight="39.0" prefWidth="248.0" style="-fx-background-radius: 10;">
          <font>
             <Font name="Arial Bold" size="18.0" />
          </font>
       </TextField>
-      <ComboBox fx:id="cmbProductos" layoutX="151.0" layoutY="417.0" prefHeight="34.0" prefWidth="297.0" style="-fx-background-color: yellow;" />
-      <Button fx:id="btnGuardar" layoutX="173.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10; -fx-background-color: #E7FA20;" text="Guardar">
+      <ComboBox fx:id="cmbProductos" layoutX="173.0" layoutY="418.0" prefHeight="34.0" prefWidth="274.0" style="-fx-background-radius: 10;" />
+      <Button fx:id="btnGuardar" layoutX="173.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10;" text="Guardar">
          <font>
             <Font name="Arial Italic" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnRegresarFMA" layoutX="300.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10; -fx-background-color: #E7FA20;" text="Regresar">
+      <Button fx:id="btnRegresarFMA" layoutX="300.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10;" text="Regresar">
          <font>
             <Font name="Arial Italic" size="15.0" />
          </font>

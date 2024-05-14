@@ -15,18 +15,18 @@
             <Image url="@../image/Agregar%20%20Encargado.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tfEmpleadoId" editable="false" layoutX="112.0" layoutY="211.0" prefHeight="39.0" prefWidth="326.0" style="-fx-background-radius: 10; -fx-background-color: yellow;">
+      <TextField fx:id="tfEmpleadoId" editable="false" layoutX="109.0" layoutY="206.0" prefHeight="25.0" prefWidth="306.0" style="-fx-background-radius: 10;">
          <font>
             <Font name="Rockwell Condensed Bold" size="18.0" />
          </font>
       </TextField>
-      <ComboBox fx:id="cmbEncargados" layoutX="102.0" layoutY="291.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <Button fx:id="btnGuardar" layoutX="149.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Guardar">
+      <ComboBox fx:id="cmbEncargados" layoutX="200.0" layoutY="273.0" prefHeight="34.0" prefWidth="255.0" style="-fx-background-radius: 10;" />
+      <Button fx:id="btnGuardar" layoutX="149.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10;" text="Guardar">
          <font>
             <Font name="Arial Italic" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnRegresarFMA" layoutX="281.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Regresar">
+      <Button fx:id="btnRegresarFMA" layoutX="281.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10;" text="Regresar">
          <font>
             <Font name="Arial Italic" size="15.0" />
          </font>

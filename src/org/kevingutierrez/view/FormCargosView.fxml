@@ -14,11 +14,11 @@
    <children>
       <ImageView fitHeight="750.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/Formulariocargos.png" />
+            <Image url="@../image/Formulario%20%20Cargos.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tfCargoId" editable="false" layoutX="150.0" layoutY="162.0" prefHeight="25.0" prefWidth="295.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextField fx:id="tfNombreCargo" layoutX="137.0" layoutY="216.0" prefHeight="25.0" prefWidth="308.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
+      <TextField fx:id="tfCargoId" editable="false" layoutX="178.0" layoutY="162.0" prefHeight="25.0" prefWidth="267.0" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfNombreCargo" layoutX="149.0" layoutY="218.0" prefHeight="25.0" prefWidth="308.0" style="-fx-background-radius: 10;" />
       <GridPane layoutX="117.0" layoutY="408.0" prefHeight="126.0" prefWidth="314.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="160.0" />
@@ -29,9 +29,9 @@
         </rowConstraints>
          <children>
             <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="77.0" prefWidth="143.0" style="-fx-background-radius: 10;" text="Cancelar" GridPane.columnIndex="1" />
-            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="79.0" prefWidth="152.0" style="-fx-background-radius: 10;" text="Guardar" />
+            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="77.0" prefWidth="143.0" style="-fx-background-radius: 10;" text="Guardar" />
          </children>
       </GridPane>
-      <TextArea fx:id="taDescripcionCargo" layoutX="76.0" layoutY="279.0" prefHeight="103.0" prefWidth="372.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
+      <TextArea fx:id="taDescripcionCargo" layoutX="73.0" layoutY="279.0" prefHeight="103.0" prefWidth="372.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
    </children>
 </AnchorPane>

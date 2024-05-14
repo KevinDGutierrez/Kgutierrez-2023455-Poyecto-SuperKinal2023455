@@ -41,7 +41,7 @@ public class GenerarReporte {
             conexion = Conexion.getInstance().obtenerConexion();
             
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("factId", 1);
+            parametros.put("factId", facId);
             
             Stage reportStage = new Stage();
             

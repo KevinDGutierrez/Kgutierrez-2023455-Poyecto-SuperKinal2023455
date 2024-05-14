@@ -115,7 +115,7 @@ public class MenuComprasController implements Initializable {
 
             colCompraId.setCellValueFactory(new PropertyValueFactory<Compra, Integer>("compraId"));
             colFecha.setCellValueFactory(new PropertyValueFactory<Compra, Date>("fechaCompra"));
-            colTotal.setCellValueFactory(new PropertyValueFactory<Compra, Double>("total"));
+            colTotal.setCellValueFactory(new PropertyValueFactory<Compra, Double>("totalCompra"));
         }
         
         

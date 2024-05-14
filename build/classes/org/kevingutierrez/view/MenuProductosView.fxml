@@ -44,22 +44,22 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" text="Agregar" textAlignment="CENTER">
+            <Button fx:id="btnAgregar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Agregar" textAlignment="CENTER">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnEditar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" text="Editar" textAlignment="CENTER" GridPane.rowIndex="2">
+            <Button fx:id="btnEditar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Editar" textAlignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnEliminar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" text="Eliminar" textAlignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="btnEliminar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Eliminar" textAlignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" text="Reportes" textAlignment="CENTER" GridPane.rowIndex="3">
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Reportes" textAlignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
@@ -67,7 +67,7 @@
          </children>
       </GridPane>
       <TextField fx:id="tfProductoId" layoutX="726.0" layoutY="62.0" prefHeight="28.0" prefWidth="210.0" promptText="Ingrese el ID del producto a buscar" />
-      <Button fx:id="btnBuscar" layoutX="944.0" layoutY="62.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="28.0" prefWidth="63.0" style="-fx-background-color: yellow; -fx-border-radius: 10;">
+      <Button fx:id="btnBuscar" layoutX="944.0" layoutY="62.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="28.0" prefWidth="63.0" style="-fx-border-radius: 10;">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -81,7 +81,7 @@
             <Image url="@../image/imageProducto.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btnRegresar" layoutX="33.0" layoutY="671.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" text="Regresar">
+      <Button fx:id="btnRegresar" layoutX="33.0" layoutY="671.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Regresar">
          <font>
             <Font name="Arial Italic" size="18.0" />
          </font>

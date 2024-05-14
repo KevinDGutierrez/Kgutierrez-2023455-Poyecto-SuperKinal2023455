@@ -64,7 +64,7 @@
             </Button>
          </children>
       </GridPane>
-      <Button fx:id="btnRegresar" layoutX="22.0" layoutY="668.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="68.0" prefWidth="124.0" style="-fx-border-radius: 10;" text="Regresar">
+      <Button fx:id="btnRegresar" layoutX="22.0" layoutY="668.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Regresar">
          <font>
             <Font name="Arial" size="22.0" />
          </font></Button>
@@ -78,7 +78,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnAsignarE" layoutX="1022.0" layoutY="668.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="133.0" style="-fx-border-radius: 10;" text="Asignar E">
+      <Button fx:id="btnAsignarE" layoutX="1022.0" layoutY="668.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="133.0" style="-fx-background-radius: 10;" text="Asignar E">
          <font>
             <Font name="Arial" size="22.0" />
          </font></Button>

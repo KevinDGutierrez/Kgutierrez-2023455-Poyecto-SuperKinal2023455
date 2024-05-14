@@ -14,12 +14,12 @@
    <children>
       <ImageView fitHeight="750.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/FormularioCategoriaProducto.png" />
+            <Image url="@../image/Formulario%20Categoria%20%20PRODUCTOS.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tfCategoriaProductoId" editable="false" layoutX="107.0" layoutY="215.0" prefHeight="25.0" prefWidth="348.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextField fx:id="tfNombreCategoria" layoutX="214.0" layoutY="270.0" prefHeight="25.0" prefWidth="247.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextArea fx:id="taDescripcionCategoria" layoutX="73.0" layoutY="342.0" prefHeight="86.0" prefWidth="387.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" wrapText="true" />
+      <TextField fx:id="tfCategoriaProductoId" editable="false" layoutX="93.0" layoutY="188.0" prefHeight="25.0" prefWidth="348.0" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfNombreCategoria" layoutX="175.0" layoutY="242.0" prefHeight="25.0" prefWidth="247.0" style="-fx-background-radius: 10;" />
+      <TextArea fx:id="taDescripcionCategoria" layoutX="57.0" layoutY="321.0" prefHeight="86.0" prefWidth="387.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" wrapText="true" />
       <GridPane layoutX="141.0" layoutY="434.0" prefHeight="126.0" prefWidth="314.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="160.0" />
@@ -29,8 +29,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="79.0" prefWidth="152.0" style="-fx-background-radius: 10;" text="Guardar" />
-            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="77.0" prefWidth="143.0" style="-fx-background-radius: 10;" text="Cancelar" GridPane.columnIndex="1" />
+            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="79.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Guardar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="77.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Cancelar" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>

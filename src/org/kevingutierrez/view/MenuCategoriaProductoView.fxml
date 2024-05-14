@@ -59,7 +59,10 @@
             </Button>
          </children>
       </GridPane>
-      <Button fx:id="btnBack" layoutX="1062.0" layoutY="657.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-border-radius: 10;" text="Regresar" />
+      <Button fx:id="btnBack" layoutX="1062.0" layoutY="657.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Regresar">
+         <font>
+            <Font size="22.0" />
+         </font></Button>
       <TextField fx:id="tfCategoriaProductoId" layoutX="580.0" layoutY="105.0" prefHeight="25.0" prefWidth="245.0" promptText="ingrese un id para realizar la busqueda" style="-fx-background-radius: 10;" />
       <Button fx:id="btnBuscar" layoutX="836.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 10;">
          <graphic>

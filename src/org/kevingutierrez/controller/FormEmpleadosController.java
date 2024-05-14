@@ -38,7 +38,7 @@ public class FormEmpleadosController implements Initializable {
     private static ResultSet resultSet = null;
     
    @FXML
-    Button btnRegresarFMA,btnGuardar;
+    Button btnRegresar,btnGuardar;
    
    @FXML
    TextField tfEmpleadoId,tfNombreE,tfApellidoE,tfSueldo,tfHoraEntrada,tfHoraSalida;
@@ -48,8 +48,13 @@ public class FormEmpleadosController implements Initializable {
    
    @FXML
 private void handleButtonAction(ActionEvent event) {
-    if(event.getSource() == btnRegresarFMA){
-        EmpleadoDTO.getEmpleadoDTO().setEmpleado(null);
+    if(event.getSource() == btnRegresar){
+        if(op == 3){
+                stage.RegistrarUsuarioView();
+            }else{
+            EmpleadoDTO.getEmpleadoDTO().setEmpleado(null);
+                stage.menuEmpleadoView();
+            }
        
     } else if(event.getSource() == btnGuardar){
         if(!tfNombreE.getText().equals("") && !tfApellidoE.getText().equals("") && !tfSueldo.getText().equals("") && !tfHoraEntrada.getText().equals("") && !tfHoraSalida.getText().equals("")){

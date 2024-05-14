@@ -40,22 +40,22 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" text="Agregar" textAlignment="CENTER" textFill="#0d0d0d">
+            <Button fx:id="btnAgregar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Agregar" textAlignment="CENTER" textFill="#0d0d0d">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnEditar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" text="Editar" textAlignment="CENTER" GridPane.rowIndex="2">
+            <Button fx:id="btnEditar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Editar" textAlignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnEliminar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" text="Eliminar" textAlignment="CENTER" textFill="#0a0a0a" GridPane.rowIndex="1">
+            <Button fx:id="btnEliminar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Eliminar" textAlignment="CENTER" textFill="#0a0a0a" GridPane.rowIndex="1">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Reportes" textAlignment="CENTER" GridPane.rowIndex="3">
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Reportes" textAlignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
@@ -63,7 +63,7 @@
          </children>
       </GridPane>
       <TextField fx:id="tfFacturaId" layoutX="689.0" layoutY="33.0" prefHeight="28.0" prefWidth="225.0" promptText="Ingrese un ID para realizar la busqueda" />
-      <Button fx:id="btnRegresar" layoutX="33.0" layoutY="643.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" text="Regresar" textFill="#141414">
+      <Button fx:id="btnRegresar" layoutX="33.0" layoutY="643.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Regresar" textFill="#141414">
          <font>
             <Font name="Arial Italic" size="18.0" />
          </font>
@@ -77,12 +77,12 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="btnAgregarDF" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" text="Agregar Detalle" textAlignment="CENTER">
+            <Button fx:id="btnAgregarDF" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Agregar Detalle" textAlignment="CENTER">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnFinalizarFactura" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" text="Finalizar Factura" textAlignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="btnFinalizarFactura" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 10;" text="Finalizar Factura" textAlignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Arial Italic" size="22.0" />
                </font>
