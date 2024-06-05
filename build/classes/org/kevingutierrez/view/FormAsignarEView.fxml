@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kevingutierrez.controller.FormAsignarEController">
+   <children>
+      <ImageView fitHeight="750.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/Agregar%20%20Encargado.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tfEmpleadoId" editable="false" layoutX="112.0" layoutY="211.0" prefHeight="39.0" prefWidth="326.0" style="-fx-background-radius: 10; -fx-background-color: yellow;">
+         <font>
+            <Font name="Rockwell Condensed Bold" size="18.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="cmbEncargados" layoutX="102.0" layoutY="291.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
+      <Button fx:id="btnGuardar" layoutX="149.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Guardar">
+         <font>
+            <Font name="Arial Italic" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRegresarFMA" layoutX="281.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Regresar">
+         <font>
+            <Font name="Arial Italic" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

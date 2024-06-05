@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,6 +27,8 @@ import org.kevingutierrez.dao.Conexion;
 import org.kevingutierrez.dto.ClienteDTO;
 import org.kevingutierrez.model.Cliente;
 import org.kevingutierrez.system.Main;
+import org.kevingutierrez.utils.SuperKinalAlert;
+
 
 /**
  * FXML Controller class
@@ -34,7 +37,7 @@ import org.kevingutierrez.system.Main;
  */
 public class MenuClientesController implements Initializable {
     private Main stage;
-    private int op;
+    public int op;
     
     private static Connection conexion;
     private static PreparedStatement statement;
@@ -62,15 +65,19 @@ public class MenuClientesController implements Initializable {
             ClienteDTO.getClienteDTO().setCliente((Cliente)tblClientes.getSelectionModel().getSelectedItem());
             stage.formClienteView(2);
         }else if(event.getSource() == btnEliminar){
-            eliminarCliente(((Cliente)tblClientes.getSelectionModel().getSelectedItem()).getClienteId());
-            cargarLista();
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(404).get() == ButtonType.OK){
+                eliminarCliente(((Cliente)tblClientes.getSelectionModel().getSelectedItem()).getClienteId());
+                cargarDatos();
+                ClienteDTO.getClienteDTO().setCliente(null);
+                SuperKinalAlert.getInstance().mostrarAlertaInformacion(700);
+            }
         }else if(event.getSource() == btnBuscar){
             tblClientes.getItems().clear();
             if(tfClienteId.getText().equals("")){
-                cargarLista();
+                cargarDatos();
             }else{
-            op = 3;
-            cargarLista();
+                op = 3;
+                cargarDatos();
             }
         }
     }
@@ -80,19 +87,16 @@ public class MenuClientesController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cargarLista();  
+        cargarDatos();  
     }
     
-    public void cargarLista(){
+    public void cargarDatos(){
         if(op == 3){
             tblClientes.getItems().add(buscarCliente());
             op = 0;
-   
         }else{
             tblClientes.setItems(listarCliente());
         }
-        
-        
         colClienteId.setCellValueFactory(new PropertyValueFactory<Cliente, Integer>("clienteId"));
         colNombre.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre"));
         colApellido.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido"));
@@ -144,7 +148,7 @@ public class MenuClientesController implements Initializable {
     public void eliminarCliente(int cliId){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_EliminarClientes(?)";
+            String sql = "CALL sp_EliminarClientes(?)";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, cliId);
             statement.execute();
@@ -154,7 +158,8 @@ public class MenuClientesController implements Initializable {
             try{
                 if(statement != null){
                     statement.close();
-                }else if(conexion != null){
+                }
+                if(conexion != null){
                     conexion.close();
                 }
             }catch(SQLException e){
@@ -165,13 +170,13 @@ public class MenuClientesController implements Initializable {
     
     public Cliente buscarCliente(){
         Cliente cliente = null;
+        
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_BuscarClientes(?)";
+            String sql = "CALL sp_BuscarClientes(?)";
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1,Integer.parseInt(tfClienteId.getText()));
+            statement.setInt(1, Integer.parseInt(tfClienteId.getText()));
             resultSet = statement.executeQuery();
-            
             if(resultSet.next()){
                 int clienteId = resultSet.getInt("clienteId");
                 String nombre = resultSet.getString("nombre");
@@ -183,7 +188,7 @@ public class MenuClientesController implements Initializable {
                 cliente = new Cliente(clienteId, nombre, apellido, telefono, direccion, nit);
             }
             
-        }catch(SQLException e){
+        }catch(Exception e){
             System.out.println(e.getMessage());
         }finally{
             try{
@@ -200,8 +205,6 @@ public class MenuClientesController implements Initializable {
                 System.out.println(e.getMessage());
             }
         }
-        
-        
         return cliente;
     }
        

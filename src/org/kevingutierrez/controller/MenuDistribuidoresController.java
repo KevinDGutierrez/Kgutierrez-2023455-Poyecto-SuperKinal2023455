@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,6 +27,8 @@ import org.kevingutierrez.dao.Conexion;
 import org.kevingutierrez.dto.DistribuidorDTO;
 import org.kevingutierrez.model.Distribuidor;
 import org.kevingutierrez.system.Main;
+import org.kevingutierrez.utils.SuperKinalAlert;
+
 /**
  *
  * @author kevin
@@ -33,7 +36,7 @@ import org.kevingutierrez.system.Main;
 public class MenuDistribuidoresController implements Initializable {
     
     private Main stage;
-    private int op;
+    public int op;
     
     private static Connection conexion;
     private static PreparedStatement statement;
@@ -61,15 +64,19 @@ public class MenuDistribuidoresController implements Initializable {
             DistribuidorDTO.getDistribuidorDTO().setDistribuidor((Distribuidor)tblDistribuidores.getSelectionModel().getSelectedItem());
             stage.formDistribuidoresView(2);
         }else if(event.getSource() == btnEliminar){
-            eliminarDistribuidor(((Distribuidor)tblDistribuidores.getSelectionModel().getSelectedItem()).getDistribuidorId());
-            cargarLista();
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(404).get() == ButtonType.OK){
+                eliminarDistribuidor(((Distribuidor)tblDistribuidores.getSelectionModel().getSelectedItem()).getDistribuidorId());
+                cargarDatos();
+                DistribuidorDTO.getDistribuidorDTO().setDistribuidor(null);
+                SuperKinalAlert.getInstance().mostrarAlertaInformacion(700);
+            }
         }else if(event.getSource() == btnBuscar){
             tblDistribuidores.getItems().clear();
             if(tfDistribuidorId.getText().equals("")){
-                cargarLista();
+                cargarDatos();
             }else{
-            op = 3;
-            cargarLista();
+                op = 3;
+                cargarDatos();
             }
         }
     }
@@ -79,19 +86,16 @@ public class MenuDistribuidoresController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cargarLista();  
+        cargarDatos();  
     }
     
-    public void cargarLista(){
+    public void cargarDatos(){
         if(op == 3){
             tblDistribuidores.getItems().add(buscarDistribuidor());
             op = 0;
-   
         }else{
             tblDistribuidores.setItems(listarDistribuidor());
         }
-        
-        
         colDistribuidorId.setCellValueFactory(new PropertyValueFactory<Distribuidor, Integer>("distribuidorId"));
         colNombreDistribuidor.setCellValueFactory(new PropertyValueFactory<Distribuidor, String>("nombreDistribuidor"));
         colDireccionDistribuidor.setCellValueFactory(new PropertyValueFactory<Distribuidor, String>("direccionDistribuidor"));
@@ -105,7 +109,7 @@ public class MenuDistribuidoresController implements Initializable {
         
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_ListarDistribuidores()";
+            String sql = "CALL sp_ListarDistribuidores()";
             statement = conexion.prepareStatement(sql);
             resultSet = statement.executeQuery();
             
@@ -143,7 +147,7 @@ public class MenuDistribuidoresController implements Initializable {
     public void eliminarDistribuidor(int disId){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_EliminarDistribuidores(?)";
+            String sql = "CALL sp_EliminarDistribuidores(?)";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, disId);
             statement.execute();
@@ -153,7 +157,8 @@ public class MenuDistribuidoresController implements Initializable {
             try{
                 if(statement != null){
                     statement.close();
-                }else if(conexion != null){
+                }
+                if(conexion != null){
                     conexion.close();
                 }
             }catch(SQLException e){
@@ -164,13 +169,13 @@ public class MenuDistribuidoresController implements Initializable {
     
     public Distribuidor buscarDistribuidor(){
         Distribuidor distribuidor = null;
+        
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_BuscarDistribuidores(?)";
+            String sql = "CALL sp_BuscarDistribuidores(?)";
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1,Integer.parseInt(tfDistribuidorId.getText()));
+            statement.setInt(1, Integer.parseInt(tfDistribuidorId.getText()));
             resultSet = statement.executeQuery();
-            
             if(resultSet.next()){
                 int distribuidorId = resultSet.getInt("distribuidorId");
                 String nombreDistribuidor = resultSet.getString("nombreDistribuidor");
@@ -182,7 +187,7 @@ public class MenuDistribuidoresController implements Initializable {
                 distribuidor = new Distribuidor(distribuidorId, nombreDistribuidor, direccionDistribuidor, nitDistribuidor, telefonoDistribuidor, web);
             }
             
-        }catch(SQLException e){
+        }catch(Exception e){
             System.out.println(e.getMessage());
         }finally{
             try{
@@ -199,8 +204,6 @@ public class MenuDistribuidoresController implements Initializable {
                 System.out.println(e.getMessage());
             }
         }
-        
-        
         return distribuidor;
     }
        

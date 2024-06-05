@@ -14,11 +14,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import org.kevingutierrez.dao.Conexion;
 import org.kevingutierrez.dto.ClienteDTO;
 import org.kevingutierrez.model.Cliente;
 import org.kevingutierrez.system.Main;
+import org.kevingutierrez.utils.SuperKinalAlert;
+
 
 /**
  * FXML Controller class
@@ -26,7 +29,7 @@ import org.kevingutierrez.system.Main;
  * @author informatica
  */
 public class FormClienteController implements Initializable {
-    private Main stage;
+   private Main stage;
     private int op;
     
     private static Connection conexion = null;
@@ -42,12 +45,40 @@ public class FormClienteController implements Initializable {
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == btnGuardar){
             if(op == 1){
-                agregarCliente();
-                stage.menuClienteView();
+                if(!tfNombre.getText().equals("") && !tfApellido.getText().equals("") && !tfDireccion.getText().equals("")){
+                    agregarCliente();
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(400);
+                    stage.menuClienteView();
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(600);
+                    if(tfNombre.getText().equals("")){
+                        tfNombre.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfApellido.getText().equals("")){
+                        tfApellido.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfDireccion.getText().equals("")){
+                        tfDireccion.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }
+                }
             }else if(op == 2){
-                editarCliente();
-                stage.menuClienteView();
-                ClienteDTO.getClienteDTO().setCliente(null);
+                if(!tfNombre.getText().equals("") && !tfApellido.getText().equals("") && !tfDireccion.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(505).get() == ButtonType.OK){
+                        editarCliente();
+                        ClienteDTO.getClienteDTO().setCliente(null);
+                        SuperKinalAlert.getInstance().mostrarAlertaInformacion(500);
+                        stage.menuClienteView();
+                    }else{
+                        stage.menuClienteView();
+                    }
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(600);
+                    if(tfNombre.getText().equals("")){
+                        tfNombre.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfApellido.getText().equals("")){
+                        tfApellido.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfDireccion.getText().equals("")){
+                        tfDireccion.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }
+                }
             }
         }else if(event.getSource() == btnCancelar){
             stage.menuClienteView();
@@ -62,7 +93,6 @@ public class FormClienteController implements Initializable {
     public void initialize(URL url, ResourceBundle resources) {
         if(ClienteDTO.getClienteDTO().getCliente() != null){
             cargarDatos(ClienteDTO.getClienteDTO().getCliente());
-            
         }
     }
     
@@ -99,12 +129,13 @@ public class FormClienteController implements Initializable {
                 System.out.println(e.getMessage());
             }
         }
+        op = 1;
     }
     
     public void editarCliente(){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_EditarClientes(?, ?, ?, ?, ?, ?)";
+            String sql = "CALL sp_EditarClientes(?,?,?,?,?,?)";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(tfClienteId.getText()));
             statement.setString(2, tfNombre.getText());
@@ -119,7 +150,8 @@ public class FormClienteController implements Initializable {
             try{
                 if(statement != null){
                     statement.close();
-                }else if(conexion != null){
+                }
+                if(conexion != null){
                     conexion.close();
                 }
             }catch(SQLException e){

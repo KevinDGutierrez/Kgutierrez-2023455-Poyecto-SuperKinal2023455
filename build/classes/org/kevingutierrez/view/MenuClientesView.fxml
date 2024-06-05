@@ -16,10 +16,10 @@
    <children>
       <ImageView fitHeight="750.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/menuClientes.png" />
+            <Image url="@../image/12.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tblClientes" layoutX="53.0" layoutY="169.0" prefHeight="470.0" prefWidth="812.0">
+      <TableView fx:id="tblClientes" layoutX="14.0" layoutY="164.0" prefHeight="470.0" prefWidth="812.0">
         <columns>
           <TableColumn fx:id="colClienteId" minWidth="135.0" prefWidth="75.0" text="clienteID" />
           <TableColumn fx:id="colNit" minWidth="135.0" prefWidth="75.0" text="nit" />
@@ -40,29 +40,32 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Editar" GridPane.columnIndex="1">
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Editar" GridPane.columnIndex="1">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Agregar">
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Agregar">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Eliminar" GridPane.columnIndex="2">
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Eliminar" GridPane.columnIndex="2">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Reportes" GridPane.columnIndex="3">
+            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Reportes" GridPane.columnIndex="3">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Button>
          </children>
       </GridPane>
-      <Button fx:id="btnBack" layoutX="30.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="99.0" style="-fx-border-radius: 10; -fx-background-color: YELLOW;" text="Regresar" />
+      <Button fx:id="btnBack" layoutX="826.0" layoutY="657.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-border-radius: 10;" text="Regresar">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font></Button>
       <TextField fx:id="tfClienteId" layoutX="440.0" layoutY="94.0" prefHeight="25.0" prefWidth="245.0" promptText="ingrese un id para realizar la busqueda" style="-fx-background-radius: 10;" />
       <Button fx:id="btnBuscar" layoutX="692.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 10;">
          <graphic>

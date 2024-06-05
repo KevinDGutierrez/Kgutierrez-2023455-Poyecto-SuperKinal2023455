@@ -18,18 +18,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.kevingutierrez.dao.Conexion;
 import org.kevingutierrez.dto.EmpleadoDTO;
 import org.kevingutierrez.model.Empleado;
 import org.kevingutierrez.system.Main;
+import org.kevingutierrez.utils.SuperKinalAlert;
+
 /**
+ * FXML Controller class
  *
- * @author informatica
+ * @author kevin
  */
 public class MenuEmpleadosController implements Initializable {
     private Main stage;
@@ -38,22 +42,23 @@ public class MenuEmpleadosController implements Initializable {
     private static Connection conexion;
     private static PreparedStatement statement;
     private static ResultSet resultSet;
-
+    
     @FXML
     TableView tblEmpleados;
     
     @FXML
-    TableColumn colEmpleadoId, colNombreEmpleado, colApellidoEmpleado, colSueldo, colHoraEntrada, colHoraSalida, colCargoId, colEncargadoId;
+    TableColumn colEmpleadoId,colNombreE,colApellidoE,colSueldo,colHoraEntrada,colHoraSalida,colCargoId,colEncargadoId;
     
     @FXML
-    Button btnBack, btnAgregar, btnEditar, btnEliminar, btnBuscar;
+    Button btnRegresar,btnAgregar,btnEditar,btnEliminar,btnBuscar,btnAsignarE;
     
     @FXML
     TextField tfEmpleadoId;
     
     @FXML
-    public void handleButtonAction(ActionEvent event){
-        if(event.getSource() == btnBack){
+    private void handleButtonAction(ActionEvent event) {
+    
+        if(event.getSource() == btnRegresar){
             stage.menuPrincipalView();
         }else if(event.getSource() == btnAgregar){
             stage.formEmpleadosView(1);
@@ -61,52 +66,53 @@ public class MenuEmpleadosController implements Initializable {
             EmpleadoDTO.getEmpleadoDTO().setEmpleado((Empleado)tblEmpleados.getSelectionModel().getSelectedItem());
             stage.formEmpleadosView(2);
         }else if(event.getSource() == btnEliminar){
-            eliminarEmpleado(((Empleado)tblEmpleados.getSelectionModel().getSelectedItem()).getEmpleadoId());
-            cargarLista();
-        }else if(event.getSource() == btnBuscar){
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(404).get() == ButtonType.OK){
+                eliminarEmpleado(((Empleado)tblEmpleados.getSelectionModel().getSelectedItem()).getEmpleadoId());
+                cargarDatos();
+            }
+        }else if (event.getSource() == btnBuscar){
             tblEmpleados.getItems().clear();
             if(tfEmpleadoId.getText().equals("")){
-                cargarLista();
+                cargarDatos();
+            
             }else{
-            op = 3;
-            cargarLista();
+                op = 3;
+                cargarDatos();
             }
+        }else if(event.getSource() == btnAsignarE){
+            EmpleadoDTO.getEmpleadoDTO().setEmpleado((Empleado)tblEmpleados.getSelectionModel().getSelectedItem());
+            stage.formAsignarEView();
         }
+    
     }
     
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        cargarLista();  
-    }
-    
-    public void cargarLista(){
+    public void cargarDatos(){
         if(op == 3){
             tblEmpleados.getItems().add(buscarEmpleado());
             op = 0;
-   
+            
         }else{
-            tblEmpleados.setItems(listarEmpleado());
+            tblEmpleados.setItems(listarEmpleados()); 
+
+            colEmpleadoId.setCellValueFactory(new PropertyValueFactory<Empleado, Integer>("empleadoId"));
+            colNombreE.setCellValueFactory(new PropertyValueFactory<Empleado, String>("nombreE"));
+            colApellidoE.setCellValueFactory(new PropertyValueFactory<Empleado, String>("apellidoE"));
+            colSueldo.setCellValueFactory(new PropertyValueFactory<Empleado, Double>("sueldo"));
+            colHoraEntrada.setCellValueFactory(new PropertyValueFactory<Empleado, Time>("horaEntrada"));
+            colHoraSalida.setCellValueFactory(new PropertyValueFactory<Empleado, Time>("horaSalida"));
+            colCargoId.setCellValueFactory(new PropertyValueFactory<Empleado, String>("cargo"));
+            colEncargadoId.setCellValueFactory(new PropertyValueFactory<Empleado, String>("encargado"));
         }
         
-        colEmpleadoId.setCellValueFactory(new PropertyValueFactory<Empleado, Integer>("empleadoId"));
-        colNombreEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado, String>("nombreEmpleado"));
-        colApellidoEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado, String>("apellidoEmpleado"));
-        colSueldo.setCellValueFactory(new PropertyValueFactory<Empleado, String>("sueldo"));
-        colHoraEntrada.setCellValueFactory(new PropertyValueFactory<Empleado, String>("horaEntrada"));
-        colHoraSalida.setCellValueFactory(new PropertyValueFactory<Empleado, String>("horaSalida"));
-        colCargoId.setCellValueFactory(new PropertyValueFactory<Empleado, String>("cargoId"));
-        colEncargadoId.setCellValueFactory(new PropertyValueFactory<Empleado, String>("encargadoId"));
+        
     }
     
-    public ObservableList<Empleado> listarEmpleado(){
+    public ObservableList<Empleado> listarEmpleados(){
         ArrayList<Empleado> empleados = new ArrayList<>();
         
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_ListarEmpleados()";
+            String sql = " CALL sp_ListarEmpleados()";
             statement = conexion.prepareStatement(sql);
             resultSet = statement.executeQuery();
             
@@ -114,13 +120,13 @@ public class MenuEmpleadosController implements Initializable {
                 int empleadoId = resultSet.getInt("empleadoId");
                 String nombreEmpleado = resultSet.getString("nombreEmpleado");
                 String apellidoEmpleado = resultSet.getString("apellidoEmpleado");
-                Double sueldo = resultSet.getDouble("sueldo");
-                Time horaEntrada = resultSet.getTime("horaEntrada");
+                double sueldo = resultSet.getDouble("sueldo");
+                Time horaentrada = resultSet.getTime("horaentrada");
                 Time horaSalida = resultSet.getTime("horaSalida");
-                int cargoId = resultSet.getInt("cargoId");
-                int encargadoId = resultSet.getInt("encargadoId");
-                
-                    empleados.add(new Empleado(empleadoId, nombreEmpleado, apellidoEmpleado, sueldo, horaEntrada, horaSalida, cargoId, encargadoId));
+                String cargoId = resultSet.getString("cargo");
+                String encargadoId = resultSet.getString("nombreEncargado");
+            
+                empleados.add(new Empleado(empleadoId, nombreEmpleado, apellidoEmpleado, sueldo, horaentrada, horaSalida,cargoId,encargadoId));
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -129,34 +135,44 @@ public class MenuEmpleadosController implements Initializable {
                 if(resultSet != null){
                     resultSet.close();
                 }
+                
                 if(statement != null){
                     statement.close();
                 }
+                
                 if(conexion != null){
                     conexion.close();
                 }
-                
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
         }
+        
+        
         return FXCollections.observableList(empleados);
     }
     
     public void eliminarEmpleado(int empId){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "CALL sp_EliminarEmpleados(?)";
+            String sql = "CALL sp_EliminarEmpleado(?)";
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1, empId);
+            statement.setInt(1,empId);
             statement.execute();
-        }catch(Exception e){
+            
+        }catch(SQLException e){
             System.out.println(e.getMessage());
         }finally{
             try{
+                if(resultSet != null){
+                    resultSet.close();
+                }
+                
                 if(statement != null){
                     statement.close();
-                }else if(conexion != null){
+                }
+                
+                if(conexion != null){
                     conexion.close();
                 }
             }catch(SQLException e){
@@ -169,25 +185,24 @@ public class MenuEmpleadosController implements Initializable {
         Empleado empleado = null;
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_BuscarEmpleados(?)";
+            String sql = "CALL sp_BuscarEmpleado(?)";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1,Integer.parseInt(tfEmpleadoId.getText()));
             resultSet = statement.executeQuery();
             
             if(resultSet.next()){
-                 int empleadoId = resultSet.getInt("empleadoId");
+                int empleadoId = resultSet.getInt("empleadoId");
                 String nombreEmpleado = resultSet.getString("nombreEmpleado");
                 String apellidoEmpleado = resultSet.getString("apellidoEmpleado");
-                Double sueldo = resultSet.getDouble("sueldo");
-                Time horaEntrada = resultSet.getTime("horaEntrada");
+                double sueldo = resultSet.getDouble("sueldo");
+                Time horaentrada = resultSet.getTime("horaentrada");
                 Time horaSalida = resultSet.getTime("horaSalida");
-                int cargoId = resultSet.getInt("cargoId");
-                int encargadoId = resultSet.getInt("encargadoId");
-                
-                empleado = new Empleado(empleadoId, nombreEmpleado, apellidoEmpleado, sueldo, horaEntrada, horaSalida, cargoId, encargadoId);
-               
-            }
+                String cargoId = resultSet.getString("cargo");
+                String encargadoId = resultSet.getString("nombreEncargado");
             
+                empleado = new Empleado(empleadoId, nombreEmpleado, apellidoEmpleado, sueldo, horaentrada, horaSalida,cargoId,encargadoId);
+
+            }   
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }finally{
@@ -195,9 +210,11 @@ public class MenuEmpleadosController implements Initializable {
                 if(resultSet != null){
                     resultSet.close();
                 }
+                
                 if(statement != null){
                     statement.close();
                 }
+                
                 if(conexion != null){
                     conexion.close();
                 }
@@ -205,16 +222,22 @@ public class MenuEmpleadosController implements Initializable {
                 System.out.println(e.getMessage());
             }
         }
-        
-        
         return empleado;
     }
-       
-    public void setStage(Main stage) {
-        this.stage = stage;
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        cargarDatos();
     }
 
     public Main getStage() {
         return stage;
     }
+
+    public void setStage(Main stage) {
+        this.stage = stage;
+    }
+    
 }
+    
+

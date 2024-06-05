@@ -14,17 +14,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.kevingutierrez.dao.Conexion;
 import org.kevingutierrez.dto.CargoDTO;
 import org.kevingutierrez.model.Cargo;
 import org.kevingutierrez.system.Main;
+import org.kevingutierrez.utils.SuperKinalAlert;
+
 /**
  *
  * @author informatica
  */
 public class FormCargoController implements Initializable {
-    
     private Main stage;
     private int op;
     
@@ -32,7 +35,10 @@ public class FormCargoController implements Initializable {
     private static PreparedStatement statement = null;
 
     @FXML
-    TextField tfCargoId, tfNombreCargo, tfDescripcionCargo;
+    TextField tfCargoId, tfNombreCargo;
+    
+    @FXML
+    TextArea taDescripcionCargo;
     
     @FXML
     Button btnGuardar, btnCancelar;
@@ -41,15 +47,39 @@ public class FormCargoController implements Initializable {
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == btnGuardar){
             if(op == 1){
-                agregarCargo();
-                stage.menuCargoView();
+                if(!tfNombreCargo.getText().equals("") && !taDescripcionCargo.getText().equals("")){
+                    agregarCargo();
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(400);
+                    stage.menuCargosView();
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(600);
+                    if(tfNombreCargo.getText().equals("")){
+                        tfNombreCargo.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(taDescripcionCargo.getText().equals("")){
+                        taDescripcionCargo.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }
+                }
             }else if(op == 2){
-                editarCargo();
-                stage.menuCargoView();
-                CargoDTO.getCargoDTO().setCargo(null);
+                if(!tfNombreCargo.getText().equals("") && !taDescripcionCargo.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(505).get() == ButtonType.OK){
+                        editarCargo();
+                        CargoDTO.getCargoDTO().setCargo(null);
+                        SuperKinalAlert.getInstance().mostrarAlertaInformacion(500);
+                        stage.menuCargosView();
+                    }else{
+                        stage.menuCargosView();
+                    }
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(600);
+                    if(tfNombreCargo.getText().equals("")){
+                        tfNombreCargo.requestFocus(); 
+                    }else if(taDescripcionCargo.getText().equals("")){
+                        taDescripcionCargo.requestFocus(); 
+                    }
+                }
             }
         }else if(event.getSource() == btnCancelar){
-            stage.menuCargoView();
+            stage.menuCargosView();
             CargoDTO.getCargoDTO().setCargo(null);
         }
     }
@@ -61,15 +91,13 @@ public class FormCargoController implements Initializable {
     public void initialize(URL url, ResourceBundle resources) {
         if(CargoDTO.getCargoDTO().getCargo() != null){
             cargarDatos(CargoDTO.getCargoDTO().getCargo());
-            
         }
     }
     
     public void cargarDatos(Cargo cargo){
         tfCargoId.setText(Integer.toString(cargo.getCargoId()));
         tfNombreCargo.setText(cargo.getNombreCargo());
-        tfDescripcionCargo.setText(cargo.getDescripcionCargo());
-        
+        taDescripcionCargo.setText(cargo.getDescripcionCargo());
     }
     
     public void agregarCargo(){
@@ -78,7 +106,7 @@ public class FormCargoController implements Initializable {
             String sql = "CALL sp_AgregarCargos(?, ?)";
             statement = conexion.prepareStatement(sql);
             statement.setString(1, tfNombreCargo.getText());
-            statement.setString(2, tfDescripcionCargo.getText());
+            statement.setString(2, taDescripcionCargo.getText());
             statement.execute();
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -103,7 +131,7 @@ public class FormCargoController implements Initializable {
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(tfCargoId.getText()));
             statement.setString(2, tfNombreCargo.getText());
-            statement.setString(3, tfDescripcionCargo.getText());
+            statement.setString(3, taDescripcionCargo.getText());
             statement.execute();
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -111,14 +139,14 @@ public class FormCargoController implements Initializable {
             try{
                 if(statement != null){
                     statement.close();
-                }else if(conexion != null){
+                }
+                if(conexion != null){
                     conexion.close();
                 }
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
         }
-        op = 2;
     }
     
     public Main getStage() {

@@ -16,7 +16,7 @@
    <children>
       <ImageView fitHeight="750.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/MenuDistribuidores.png" />
+            <Image url="@../image/5.png" />
          </image>
       </ImageView>
       <TableView fx:id="tblDistribuidores" layoutX="65.0" layoutY="80.0" prefHeight="470.0" prefWidth="1022.0">
@@ -40,32 +40,35 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Editar" GridPane.columnIndex="1">
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Editar" GridPane.columnIndex="1">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Agregar">
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Agregar">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Eliminar" GridPane.columnIndex="2">
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Eliminar" GridPane.columnIndex="2">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: yellow;" text="Reportes" GridPane.columnIndex="3">
+            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="124.0" style="-fx-background-radius: 10;" text="Reportes" GridPane.columnIndex="3">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Button>
          </children>
       </GridPane>
-      <Button fx:id="btnBack" layoutX="1052.0" layoutY="677.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="99.0" style="-fx-border-radius: 10; -fx-background-color: YELLOW;" text="Regresar" />
+      <Button fx:id="btnBack" layoutX="1039.0" layoutY="655.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="69.0" prefWidth="124.0" style="-fx-border-radius: 10;" text="Regresar">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font></Button>
       <TextField fx:id="tfDistribuidorId" layoutX="846.0" layoutY="21.0" prefHeight="25.0" prefWidth="245.0" promptText="ingrese un id para realizar la busqueda" style="-fx-background-radius: 10;" />
-      <Button fx:id="btnBuscar" layoutX="1101.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 10;" />
-      <ImageView fitHeight="20.0" fitWidth="27.0" layoutX="1106.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="btnBuscar" layoutX="1101.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 10;" />
+      <ImageView fitHeight="20.0" fitWidth="27.0" layoutX="1111.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/lupa.png" />
          </image>

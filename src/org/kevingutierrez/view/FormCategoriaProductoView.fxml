@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kevingutierrez.controller.FormCategoriaProductoController">
+   <children>
+      <ImageView fitHeight="750.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/FormularioCategoriaProducto.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tfCategoriaProductoId" editable="false" layoutX="107.0" layoutY="215.0" prefHeight="25.0" prefWidth="348.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
+      <TextField fx:id="tfNombreCategoria" layoutX="214.0" layoutY="270.0" prefHeight="25.0" prefWidth="247.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
+      <TextArea fx:id="taDescripcionCategoria" layoutX="73.0" layoutY="342.0" prefHeight="86.0" prefWidth="387.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" wrapText="true" />
+      <GridPane layoutX="141.0" layoutY="434.0" prefHeight="126.0" prefWidth="314.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="160.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="223.0" minWidth="10.0" prefWidth="148.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="79.0" prefWidth="152.0" style="-fx-background-radius: 10;" text="Guardar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="77.0" prefWidth="143.0" style="-fx-background-radius: 10;" text="Cancelar" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -1,41 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kevingutierrez.controller.FormEmpleadoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kevingutierrez.controller.FormEmpleadosController">
    <children>
       <ImageView fitHeight="750.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/FormularioEmpleados.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tfClienteId" layoutX="171.0" layoutY="165.0" prefHeight="25.0" prefWidth="276.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextField fx:id="tfApellido" layoutX="143.0" layoutY="260.0" prefHeight="26.0" prefWidth="245.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextField fx:id="tfNombre" layoutX="143.0" layoutY="219.0" prefHeight="16.0" prefWidth="257.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextField fx:id="tfNit" layoutX="172.0" layoutY="375.0" prefHeight="25.0" prefWidth="276.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextField fx:id="tfTelefono" layoutX="130.0" layoutY="316.0" prefHeight="26.0" prefWidth="298.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextField fx:id="tfDireccion" layoutX="166.0" layoutY="427.0" prefHeight="26.0" prefWidth="286.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <GridPane layoutX="118.0" layoutY="575.0" prefHeight="77.0" prefWidth="265.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="160.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="223.0" minWidth="10.0" prefWidth="148.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="116.0" style="-fx-background-radius: 10;" text="Cancelar" GridPane.columnIndex="1" />
-            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="107.0" style="-fx-background-radius: 10;" text="Guardar" />
-         </children>
-      </GridPane>
-      <TextField fx:id="tfDireccion1" layoutX="160.0" layoutY="525.0" prefHeight="26.0" prefWidth="286.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
-      <TextField fx:id="tfDireccion11" layoutX="143.0" layoutY="473.0" prefHeight="26.0" prefWidth="298.0" style="-fx-background-color: yellow; -fx-background-radius: 10;" />
+      <TextField fx:id="tfEmpleadoId" editable="false" layoutX="167.0" layoutY="152.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="tfNombreE" layoutX="138.0" layoutY="216.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="tfApellidoE" layoutX="138.0" layoutY="261.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="tfSueldo" layoutX="127.0" layoutY="313.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="tfHoraEntrada" layoutX="167.0" layoutY="367.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="tfHoraSalida" layoutX="159.0" layoutY="416.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="cmbCargos" layoutX="138.0" layoutY="470.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: yellow;" />
+      <Button fx:id="btnGuardar" layoutX="167.0" layoutY="584.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10; -fx-background-color: #E7FA20;" text="Guardar">
+         <font>
+            <Font name="Arial Italic" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRegresarFMA" layoutX="287.0" layoutY="584.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 10; -fx-background-color: #E7FA20;" text="Regresar">
+         <font>
+            <Font name="Arial Italic" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

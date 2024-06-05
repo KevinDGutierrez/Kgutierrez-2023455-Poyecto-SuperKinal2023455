@@ -17,23 +17,26 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.kevingutierrez.dao.Conexion;
 import org.kevingutierrez.dto.CargoDTO;
 import org.kevingutierrez.model.Cargo;
 import org.kevingutierrez.system.Main;
+import org.kevingutierrez.utils.SuperKinalAlert;
+
 /**
+ * FXML Controller class
  *
- * @author informatica
+ * @author kevin
  */
 public class MenuCargosController implements Initializable {
-   
     private Main stage;
-    private int op;
+    public int op;
     
     private static Connection conexion;
     private static PreparedStatement statement;
@@ -52,48 +55,50 @@ public class MenuCargosController implements Initializable {
     TextField tfCargoId;
     
     @FXML
-    
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == btnBack){
             stage.menuPrincipalView();
         }else if(event.getSource() == btnAgregar){
-            stage.formCargosView(1);
+            stage.formCargoView(1);
         }else if(event.getSource() == btnEditar){
             CargoDTO.getCargoDTO().setCargo((Cargo)tblCargos.getSelectionModel().getSelectedItem());
-            stage.formCargosView(2);
+            stage.formCargoView(2);
         }else if(event.getSource() == btnEliminar){
-            eliminarCargo(((Cargo)tblCargos.getSelectionModel().getSelectedItem()).getCargoId());
-            cargarLista();
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(404).get() == ButtonType.OK){
+                eliminarCargo(((Cargo)tblCargos.getSelectionModel().getSelectedItem()).getCargoId());
+                cargarDatos();
+                CargoDTO.getCargoDTO().setCargo(null);
+                SuperKinalAlert.getInstance().mostrarAlertaInformacion(700);
+            }
         }else if(event.getSource() == btnBuscar){
             tblCargos.getItems().clear();
             if(tfCargoId.getText().equals("")){
-                cargarLista();
+                cargarDatos();
             }else{
-            op = 3;
-            cargarLista();
+                op = 3;
+                cargarDatos();
             }
         }
     }
     
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cargarLista();  
+        cargarDatos();  
     }
     
-    public void cargarLista(){
+    public void cargarDatos(){
         if(op == 3){
             tblCargos.getItems().add(buscarCargo());
             op = 0;
-   
         }else{
             tblCargos.setItems(listarCargo());
         }
-        
-        
-        colCargoId.setCellValueFactory(new PropertyValueFactory<Cargo, Integer>("cargoId "));
-        colNombreCargo.setCellValueFactory(new PropertyValueFactory<Cargo, String>("nombreCargo "));
-        colDescripcionCargo.setCellValueFactory(new PropertyValueFactory<Cargo, String>("descripcionCargo "));
-        
+        colCargoId.setCellValueFactory(new PropertyValueFactory<Cargo, Integer>("cargoId"));
+        colNombreCargo.setCellValueFactory(new PropertyValueFactory<Cargo, String>("nombreCargo"));
+        colDescripcionCargo.setCellValueFactory(new PropertyValueFactory<Cargo, String>("descripcionCargo"));
     }
     
     public ObservableList<Cargo> listarCargo(){
@@ -146,7 +151,8 @@ public class MenuCargosController implements Initializable {
             try{
                 if(statement != null){
                     statement.close();
-                }else if(conexion != null){
+                }
+                if(conexion != null){
                     conexion.close();
                 }
             }catch(SQLException e){
@@ -157,22 +163,22 @@ public class MenuCargosController implements Initializable {
     
     public Cargo buscarCargo(){
         Cargo cargo = null;
+        
         try{
             conexion = Conexion.getInstance().obtenerConexion();
             String sql = "CALL sp_BuscarCargos(?)";
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1,Integer.parseInt(tfCargoId.getText()));
+            statement.setInt(1, Integer.parseInt(tfCargoId.getText()));
             resultSet = statement.executeQuery();
-            
             if(resultSet.next()){
                 int cargoId = resultSet.getInt("cargoId");
                 String nombreCargo = resultSet.getString("nombreCargo");
                 String descripcionCargo = resultSet.getString("descripcionCargo");
-  
+                
                 cargo = new Cargo(cargoId, nombreCargo, descripcionCargo);
             }
             
-        }catch(SQLException e){
+        }catch(Exception e){
             System.out.println(e.getMessage());
         }finally{
             try{
@@ -189,8 +195,6 @@ public class MenuCargosController implements Initializable {
                 System.out.println(e.getMessage());
             }
         }
-        
-        
         return cargo;
     }
        

@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
+import org.kevingutierrez.report.GenerarReporte;
 import org.kevingutierrez.system.Main;
 
 /**
@@ -19,24 +20,41 @@ import org.kevingutierrez.system.Main;
  * @author informatica
  */
 public class MenuPrincipalController implements Initializable {
+    
     private Main stage;
     
     @FXML
     MenuItem btnMenuClientes, btnMenuEmpleados, btnMenuCargos, btnMenuFacturas, btnMenuTicketSoporte,btnMenuDistribuidores,
-             btnMenuCategoriaProductos, btnMenuProductos, btnMenuDetalleFacturas, btnMenuCompras, btnMenuDetalleCompras, btnMenuPromociones;
+             btnMenuCategoriaProductos, btnMenuProductos, btnMenuCompras, btnMenuPromociones,
+             btnRClientes, btnRProductos;
     
     @FXML
     public void handleButtonAction(ActionEvent event){
+        
         if(event.getSource() == btnMenuClientes){
             stage.menuClienteView();
         }else if (event.getSource() == btnMenuEmpleados){
             stage.menuEmpleadoView();
         }else if (event.getSource() == btnMenuCargos){
-            stage.menuCargoView();
+            stage.menuCargosView();
         }else if (event.getSource() == btnMenuDistribuidores){
             stage.menuDistribuidorView();
         }else if (event.getSource() == btnMenuTicketSoporte){
             stage.menuTicketSoporteView();
+        }else if (event.getSource() == btnMenuCategoriaProductos){
+            stage.menuCategoriaProductoView();
+        }else if(event.getSource() == btnMenuProductos){
+            stage.menuProductosView();
+        }else if(event.getSource() == btnMenuPromociones){
+            stage.menuPromocionesView();
+        }else if(event.getSource() == btnMenuFacturas){
+            stage.menuFacturasView();
+        }else if(event.getSource() == btnMenuCompras){
+            stage.menuComprasView();
+        }else if(event.getSource() == btnRClientes){
+            GenerarReporte.getInstance().generarClientes();
+        }else if(event.getSource() == btnRProductos){
+            GenerarReporte.getInstance().generarProductos();
         }
     }
     

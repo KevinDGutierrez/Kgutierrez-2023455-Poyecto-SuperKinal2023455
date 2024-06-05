@@ -4,33 +4,37 @@
  * and open the template in the editor.
  */
 package org.kevingutierrez.model;
+
 import java.sql.Time;
+
 /**
  *
  * @author informatica
  */
 public class Empleado {
     private int empleadoId;
-    private String nombreEmpleado;
-    private String apellidoEmpleado;
-    private Double sueldo;
+    private String nombreE;
+    private String apellidoE;
+    private double sueldo;
     private Time horaEntrada;
     private Time horaSalida;
     private int cargoId;
+    private String cargo;
     private int encargadoId;
+    private String encargado;
 
     public Empleado() {
     }
 
-    public Empleado(int empleadoId, String nombreEmpleado, String apellidoEmpleado, Double sueldo, Time horaEntrada, Time horaSalida, int cargoId, int encargadoId) {
+    public Empleado(int empleadoId, String nombreE, String apellidoE, double sueldo, Time horaEntrada, Time horaSalida,  String cargo, String encargado) {
         this.empleadoId = empleadoId;
-        this.nombreEmpleado = nombreEmpleado;
-        this.apellidoEmpleado = apellidoEmpleado;
+        this.nombreE = nombreE;
+        this.apellidoE = apellidoE;
         this.sueldo = sueldo;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
-        this.cargoId = cargoId;
-        this.encargadoId = encargadoId;
+        this.cargo = cargo;
+        this.encargado = encargado;
     }
 
     public int getEmpleadoId() {
@@ -41,27 +45,27 @@ public class Empleado {
         this.empleadoId = empleadoId;
     }
 
-    public String getNombreEmpleado() {
-        return nombreEmpleado;
+    public String getNombreE() {
+        return nombreE;
     }
 
-    public void setNombreEmpleado(String nombreEmpleado) {
-        this.nombreEmpleado = nombreEmpleado;
+    public void setNombreE(String nombreE) {
+        this.nombreE = nombreE;
     }
 
-    public String getApellidoEmpleado() {
-        return apellidoEmpleado;
+    public String getApellidoE() {
+        return apellidoE;
     }
 
-    public void setApellidoEmpleado(String apellidoEmpleado) {
-        this.apellidoEmpleado = apellidoEmpleado;
+    public void setApellidoE(String apellidoE) {
+        this.apellidoE = apellidoE;
     }
 
-    public Double getSueldo() {
+    public double getSueldo() {
         return sueldo;
     }
 
-    public void setSueldo(Double sueldo) {
+    public void setSueldo(double sueldo) {
         this.sueldo = sueldo;
     }
 
@@ -89,6 +93,14 @@ public class Empleado {
         this.cargoId = cargoId;
     }
 
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
     public int getEncargadoId() {
         return encargadoId;
     }
@@ -97,10 +109,19 @@ public class Empleado {
         this.encargadoId = encargadoId;
     }
 
+    public String getEncargado() {
+        return encargado;
+    }
+
+    public void setEncargado(String encargado) {
+        this.encargado = encargado;
+    }
+
     @Override
     public String toString() {
-        return "Empleado{" + "empleadoId=" + empleadoId + ", nombreEmpleado=" + nombreEmpleado + ", apellidoEmpleado=" + apellidoEmpleado + ", sueldo=" + sueldo + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", cargoId=" + cargoId + ", encargadoId=" + encargadoId + '}';
+        return "Id: " + empleadoId + " | " + nombreE + " " + apellidoE;
     }
+    
     
     
 }

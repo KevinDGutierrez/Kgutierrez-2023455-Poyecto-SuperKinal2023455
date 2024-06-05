@@ -14,11 +14,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import org.kevingutierrez.dao.Conexion;
 import org.kevingutierrez.dto.DistribuidorDTO;
 import org.kevingutierrez.model.Distribuidor;
 import org.kevingutierrez.system.Main;
+import org.kevingutierrez.utils.SuperKinalAlert;
+
 /**
  *
  * @author kevin
@@ -32,7 +35,7 @@ public class FormDistribuidorController implements Initializable {
     private static PreparedStatement statement = null;
 
     @FXML
-    TextField tfDistribuidorId , tfNombreDistribuidor, tfDireccionDistribuidor , tfNitDistribuidor , tfTelefonoDistribuidor , tfWeb;
+    TextField tfDistribuidorId, tfNombreDistribuidor, tfDireccionDistribuidor, tfNitDistribuidor, tfTelefonoDistribuidor, tfWeb;
     
     @FXML
     Button btnGuardar, btnCancelar;
@@ -41,12 +44,44 @@ public class FormDistribuidorController implements Initializable {
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == btnGuardar){
             if(op == 1){
-                agregarDistribuidor();
-                stage.menuDistribuidorView();
+                if(!tfNombreDistribuidor.getText().equals("") && !tfDireccionDistribuidor.getText().equals("") && !tfNitDistribuidor.getText().equals("") && !tfTelefonoDistribuidor.getText().equals("")){
+                    agregarDistribuidor();
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(400);
+                    stage.menuDistribuidorView();
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(600);
+                    if(tfNombreDistribuidor.getText().equals("")){
+                        tfNombreDistribuidor.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfDireccionDistribuidor.getText().equals("")){
+                        tfDireccionDistribuidor.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfNitDistribuidor.getText().equals("")){
+                        tfNitDistribuidor.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfTelefonoDistribuidor.getText().equals("")){
+                        tfTelefonoDistribuidor.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }
+                }
             }else if(op == 2){
-                editarDistribuidor();
-                stage.menuDistribuidorView();
-                DistribuidorDTO.getDistribuidorDTO().setDistribuidor(null);
+                if(!tfNombreDistribuidor.getText().equals("") && !tfDireccionDistribuidor.getText().equals("") && !tfNitDistribuidor.getText().equals("") && !tfTelefonoDistribuidor.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(505).get() == ButtonType.OK){
+                        editarDistribuidor();
+                        DistribuidorDTO.getDistribuidorDTO().setDistribuidor(null);
+                        SuperKinalAlert.getInstance().mostrarAlertaInformacion(500);
+                        stage.menuDistribuidorView();
+                    }else{
+                        stage.menuDistribuidorView();
+                    }
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInformacion(600);
+                    if(tfNombreDistribuidor.getText().equals("")){
+                        tfNombreDistribuidor.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfDireccionDistribuidor.getText().equals("")){
+                        tfDireccionDistribuidor.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfNitDistribuidor.getText().equals("")){
+                        tfNitDistribuidor.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }else if(tfTelefonoDistribuidor.getText().equals("")){
+                        tfTelefonoDistribuidor.requestFocus(); // Para enfocar un textField de forma dinámica
+                    }
+                }
             }
         }else if(event.getSource() == btnCancelar){
             stage.menuDistribuidorView();
@@ -58,10 +93,9 @@ public class FormDistribuidorController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL url, ResourceBundle resources) {
         if(DistribuidorDTO.getDistribuidorDTO().getDistribuidor() != null){
             cargarDatos(DistribuidorDTO.getDistribuidorDTO().getDistribuidor());
-            
         }
     }
     
@@ -98,12 +132,13 @@ public class FormDistribuidorController implements Initializable {
                 System.out.println(e.getMessage());
             }
         }
+        op = 1;
     }
     
     public void editarDistribuidor(){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_EditarDistribuidores(?, ?, ?, ?, ?, ?)";
+            String sql = "CALL sp_EditarDistribuidores(?, ?, ?, ?, ?, ?)";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(tfDistribuidorId.getText()));
             statement.setString(2, tfNombreDistribuidor.getText());
@@ -118,7 +153,8 @@ public class FormDistribuidorController implements Initializable {
             try{
                 if(statement != null){
                     statement.close();
-                }else if(conexion != null){
+                }
+                if(conexion != null){
                     conexion.close();
                 }
             }catch(SQLException e){

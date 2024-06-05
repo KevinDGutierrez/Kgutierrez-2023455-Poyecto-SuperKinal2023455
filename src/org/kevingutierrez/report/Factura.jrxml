@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8ec34be1-8cb2-4652-9174-358726d46939">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DBSuperKinal"/>
+	<parameter name="factId" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM DetalleFactura
+JOIN Facturas ON DetalleFactura.facturaId = Facturas.facturaId
+JOIN Clientes ON Facturas.clienteId = Clientes.clienteId
+JOIN Productos ON DetalleFactura.productoId = Productos.productoId
+WHERE Facturas.facturaId = $P{factId}]]>
+	</queryString>
+	<field name="facturaId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="facturaId"/>
+		<property name="com.jaspersoft.studio.field.label" value="facturaId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detallefactura"/>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="facturas"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="nit" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nit"/>
+		<property name="com.jaspersoft.studio.field.label" value="nit"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.label" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="nombreProducto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombreProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="precioVentaUnitario" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="precioVentaUnitario"/>
+		<property name="com.jaspersoft.studio.field.label" value="precioVentaUnitario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Facturas"/>
+	</field>
+	<variable name="precioSinIva" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{precioVentaUnitario}]]></variableExpression>
+	</variable>
+	<variable name="Iva" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{precioVentaUnitario}*0.12]]></variableExpression>
+	</variable>
+	<group name="facturaId">
+		<groupExpression><![CDATA[$F{facturaId}]]></groupExpression>
+	</group>
+	<group name="fecha">
+		<groupExpression><![CDATA[$F{fecha}]]></groupExpression>
+	</group>
+	<group name="direccion">
+		<groupExpression><![CDATA[$F{direccion}]]></groupExpression>
+	</group>
+	<group name="nit">
+		<groupExpression><![CDATA[$F{nit}]]></groupExpression>
+	</group>
+	<group name="nombre">
+		<groupExpression><![CDATA[$F{nombre}]]></groupExpression>
+	</group>
+	<group name="apellido">
+		<groupExpression><![CDATA[$F{apellido}]]></groupExpression>
+	</group>
+	<group name="nombreProducto">
+		<groupExpression><![CDATA[$F{nombreProducto}]]></groupExpression>
+	</group>
+	<group name="precioVentaUnitario">
+		<groupExpression><![CDATA[$F{precioVentaUnitario}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="141" splitType="Stretch">
+			<image>
+				<reportElement x="50" y="0" width="160" height="140" uuid="dab0832f-c9d0-4338-8c06-752b8645cf8a"/>
+				<imageExpression><![CDATA["https://i.ibb.co/Q7VkQJV/New-Kinal-removebg-preview.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="220" y="20" width="290" height="80" uuid="5d42b439-738b-4702-ad81-9e711f05cb68"/>
+				<textElement>
+					<font fontName="Arial Black" size="50"/>
+				</textElement>
+				<text><![CDATA[Factura]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="100" width="200" height="30" uuid="249dac37-8089-4459-9ce4-e36202bdec57"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Factura No. "+$F{facturaId}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="55" splitType="Stretch">
+			<textField>
+				<reportElement x="220" y="10" width="100" height="30" uuid="3dd53134-fa06-490e-9b8f-623739bd4450"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="96" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="66" width="132" height="30" uuid="f0640a2e-ed9c-4de0-802d-96ee450655c4"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nit : "+$F{nit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="10" width="230" height="30" uuid="166ec616-9d66-49bc-96fd-955c18dde5f8"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Direccion"+$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="66" width="351" height="30" uuid="9ee2dc30-d50d-424e-b5f5-05aaaea24484"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cliente : "+$F{nombre}+" "+$F{apellido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="81" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="20" width="270" height="30" uuid="f91b4de6-c5d3-4186-9860-5da95801ba76">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e4a53016-f9e1-4fba-b03c-ec12d00aca21"/>
+				</reportElement>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1.  "+$F{nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="20" width="180" height="30" uuid="cbd1e63d-9e60-4bc4-8763-6939c4901e10">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="60361237-4eda-4648-ad7a-397562e90a4e"/>
+				</reportElement>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Q	"+$F{precioVentaUnitario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="128" splitType="Stretch">
+			<textField>
+				<reportElement x="375" y="25" width="159" height="30" uuid="bf32b905-acd9-4205-8658-d629e7cbf316"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Q	"+$V{precioSinIva}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="235" y="25" width="130" height="30" uuid="079877dd-008b-474d-a2d8-5eaf00b68aa0"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Precio sin Iva : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="55" width="130" height="30" uuid="9d10bd74-8508-421a-8966-59e24912c6a6"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Iva  :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="55" width="100" height="30" uuid="f7bdb813-cc48-4577-9a02-fb760353d939"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Q	"+$V{Iva}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="295" y="85" width="120" height="30" uuid="19ba7143-1fc6-46bf-884a-43433822679c"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Total   :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="85" width="100" height="30" uuid="701e51d2-b923-4253-97a0-5e34601a95b6"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Q	"+$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="12" width="350" height="42" uuid="c9603eba-4cc3-434e-abb3-019c44e6bd99"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Gracias por su compra Vuelva Pronto!!]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -80,7 +80,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_AgregarCargos(IN nomCar VARCHAR(30), IN desCar VARCHAR(100))
+CREATE PROCEDURE sp_AgregarCargos(IN nomCar VARCHAR(30), IN desCar VARCHAR(300))
     BEGIN
         INSERT INTO Cargos (nombreCargo, descripcionCargo)
             VALUES (nomCar, desCar);
@@ -142,156 +142,150 @@ DELIMITER ;
 -- ********************************** EMPLEADOS ********************************** --
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_AgregarEmpleados(IN nomEmp VARCHAR(30), IN apeEmp VARCHAR(30), IN sue DECIMAL(10,2), IN horEnt TIME, IN horSal TIME, IN carId INT, IN encaId INT)
-    BEGIN
-        INSERT INTO Empleados (nombreEmpleado, apellidoEmpleado, sueldo, horaEntrada, horaSalida, cargoId, encargadoId)
-            VALUES (nomEmp, apeEmp, sue, horEnt, horSal, carId, encaId);
-     END$$
-
+CREATE PROCEDURE sp_AgregarEmpleado(nomE VARCHAR(30), apeE VARCHAR(30), sueldoE DECIMAL(10,2), horaEntradaE TIME, horaSalidaE TIME, cargoIdE INT)
+BEGIN
+    INSERT INTO Empleados(nombreEmpleado, apellidoEmpleado, sueldo, horaentrada, horaSalida, cargoId)
+    VALUES (nomE, apeE, sueldoE, horaEntradaE, horaSalidaE, cargoIdE );
+END$$
 DELIMITER ;
 
-DELIMITER $$
 
+
+
+DELIMITER $$
 CREATE PROCEDURE sp_ListarEmpleados()
-    BEGIN
-        SELECT
-			Empleado.empleadoId,
-            Empleados.nombreEmpleado,
-            Empleados.apellidoEmpleado,
-            Empleados.sueldo,
-            Empleados.horaEntrada,
-            Empleados.horaSalida,
-			Empleados.cargoId,
-            Empleados.encargadoId
-                FROM Empleados;
-    END$$
-
+BEGIN
+    SELECT EP.empleadoId, EP.nombreEmpleado, EP.apellidoEmpleado, EP.sueldo, EP.horaentrada, EP.horaSalida,
+        CONCAT("Id: ", Ca.cargoId, " | ", Ca.nombreCargo) AS cargo, 
+        CONCAT(EE.nombreEmpleado, ' ', EE.apellidoEmpleado) AS nombreEncargado
+    FROM Empleados EP
+    JOIN Cargos Ca ON EP.cargoId = Ca.cargoId
+    LEFT JOIN Empleados EE ON EP.encargadoId = EE.empleadoId;
+END$$
 DELIMITER ;
- 
-DELIMITER $$
- 
-CREATE PROCEDURE sp_BuscarEmpleados(IN empId INT)
-	BEGIN
-		SELECT
-            Empleado.empleadoId,
-            Empleados.nombreEmpleado,
-            Empleados.apellidoEmpleado,
-            Empleados.sueldo,
-            Empleados.horaEntrada,
-            Empleados.horaSalida,
-			Empleados.cargoId,
-            Empleados.encargadoId
-				FROM Empleados
-					WHERE empleadoId = empId;
+call sp_ListarEmpleados();
 
-	END$$
 
-DELIMITER ;
+
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EliminarEmpleados(IN empId INT)
-
-	BEGIN
-		DELETE FROM Empleados
-			WHERE empleadoId = empId;
-
-	END$$
-
+CREATE PROCEDURE sp_EliminarEmpleado(IN empId INT)
+BEGIN
+    DELETE FROM Empleados 
+    WHERE empleadoId = empId;
+END$$
 DELIMITER ;
+
+
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EditarEmpleados(IN empId INT, IN nomEmp VARCHAR(30), IN apeEmp VARCHAR(30), IN sue DECIMAL(10,2), IN horEnt TIME, IN horSal TIME, IN carId INT, IN encaId INT)
-	BEGIN
-		UPDATE Empleados
-			SET
-				nombreEmpleado = nomEmp,
-				apellidoEmpleado = apeEmp,
-				sueldo = sue,
-                horaEntrada = horEnt,
-                horaSalida = horSal,
-                cargoId = carId,
-                encargadoId = encaId
-					WHERE empleadoId = empId;
-	END$$
-
+CREATE PROCEDURE sp_BuscarEmpleado(IN empId INT)
+BEGIN
+    SELECT EP.empleadoId, EP.nombreEmpleado, EP.apellidoEmpleado, EP.sueldo, EP.horaentrada, EP.horaSalida,
+        CONCAT("Id: ", Ca.cargoId, " | ", Ca.nombreCargo) AS cargo, 
+        CONCAT(EE.nombreEmpleado, ' ', EE.apellidoEmpleado) AS nombreEncargado
+    FROM Empleados EP
+    JOIN Cargos Ca ON EP.cargoId = Ca.cargoId
+    LEFT JOIN Empleados EE ON EP.encargadoId = EE.empleadoId
+	WHERE EP.empleadoId = empId;
+END$$
 DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_EditarEmpleado(IN empId INT, IN nomE VARCHAR(30), IN apeE VARCHAR(30), IN sueldoE DECIMAL(10,2), IN horaEntradaE TIME, IN horaSalidaE TIME, IN cargoIdE INT)
+BEGIN
+    UPDATE Empleados
+    SET nombreEmpleado = nomE, apellidoEmpleado = apeE, sueldo = sueldoE, horaentrada = horaEntradaE, horaSalida = horaSalidaE, cargoId = cargoIdE 
+    WHERE empleadoId = empId;
+END$$
+DELIMITER ;
+
+
+
+-- ENCARGADO 
+Delimiter $$
+create procedure sp_AsignarEncargado(In empId Int, In encarId int)
+begin
+
+	Update Empleados  
+		Set 
+			Empleados.encargadoId = encarId
+			Where empleadoId = empId;
+end$$
+Delimiter ;
 
 -- ********************************** FACTURAS ********************************** --
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_AgregarFacturas(IN fec DATE, IN hor TIME, IN cliId INT, IN empId INT, IN tot DECIMAL(10,2))
-    BEGIN
-        INSERT INTO Facturas (fecha, hora, clienteId, empleadoId, total)
-            VALUES (fec, hor, cliId, empId, tot);
-     END$$
-
+CREATE PROCEDURE sp_AgregarFactura(cliId INT, empId INT)
+BEGIN
+    INSERT INTO Facturas(fecha, hora, clienteId, empleadoId)
+    VALUES (curdate(), curtime(), cliId, empId);
+END$$
 DELIMITER ;
 
-DELIMITER $$
 
+
+DELIMITER $$
 CREATE PROCEDURE sp_ListarFacturas()
-    BEGIN
-        SELECT
-			Facturas.facturaId,
-            Facturas.fecha,
-            Facturas.hora,
-            Facturas.clienteId,
-            Facturas.empleadoId,
-			Facturas.total
-                FROM Facturas;
-    END$$
+BEGIN
+    SELECT F.facturaId, F.fecha, F.hora, 
+		   CONCAT("Id: ", C.clienteId, " | ", C.nombre, " ", C.apellido) AS cliente,
+		   CONCAT("Id: ", E.empleadoId, " | ", E.nombreEmpleado, " ", E.apellidoEmpleado) AS empleado,
+		   F.total
+	FROM Facturas F
+	JOIN Clientes C ON F.clienteId = C.clienteId
+	JOIN Empleados E ON F.empleadoId = E.empleadoId;
 
+END$$
 DELIMITER ;
- 
-DELIMITER $$
- 
-CREATE PROCEDURE sp_BuscarFacturas(IN facId INT)
-	BEGIN
-		SELECT
-            Facturas.facturaId,
-            Facturas.fecha,
-            Facturas.hora,
-            Facturas.clienteId,
-            Facturas.empleadoId,
-            Facturas.total
-				FROM Facturas
-					WHERE facturaId = facId;
 
-	END$$
 
-DELIMITER ;
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EliminarFacturas(IN facId INT)
-
-	BEGIN
-		DELETE FROM Facturas
-			WHERE facturaId = facId;
-
-	END$$
-
+CREATE PROCEDURE sp_EliminarFactura(IN factId INT)
+BEGIN
+    DELETE FROM Facturas 
+    WHERE facturaId = factId;
+END$$
 DELIMITER ;
+
+
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EditarFacturas(IN facId INT, IN fec DATE, IN hor TIME, IN cliId INT, IN empId INT, IN total DECIMAL(10,2))
-	BEGIN
-		UPDATE Facturas
-			SET
-				fecha = fac,
-				hora = hor,
-				clienteId = cliId,
-				empleadoId = empId,
-				total = tot
-					WHERE facturaId = facId;
-	END$$
-
+CREATE PROCEDURE sp_BuscarFactura(IN factId INT)
+BEGIN
+    SELECT F.facturaId, F.fecha, F.hora, 
+		   CONCAT("Id: ", C.clienteId, " | ", C.nombre, " ", C.apellido) AS cliente,
+		   CONCAT("Id: ", E.empleadoId, " | ", E.nombreEmpleado, " ", E.apellidoEmpleado) AS empleado,
+		   F.total
+		FROM Facturas F
+	JOIN Clientes C ON F.clienteId = C.clienteId
+	JOIN Empleados E ON F.empleadoId = E.empleadoId
+	WHERE facturaId = factId;
+END$$
 DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_EditarFactura(IN factId INT, IN cliId INT, IN empId INT)
+BEGIN
+    UPDATE Facturas
+    SET fecha = curdate(), hora = curtime(), clienteId = cliId, empleadoId = empId
+    WHERE facturaId = factId;
+END$$
+DELIMITER ;
+
+
 
 -- ********************************** TICKET SOPORTES ********************************** --
 
@@ -300,7 +294,7 @@ DELIMITER $$
 CREATE PROCEDURE sp_AgregarTicketSoportes(IN desTic VARCHAR(250), IN cliId INT, IN facId INT)
     BEGIN
         INSERT INTO TicketSoportes (descripcionTicket, estatus, clienteId, facturaId)
-            VALUES (desTic, 'Recien Creado', cliId, facId);
+            VALUES (desTic, 'Recien creado', cliId, facId);
      END$$
 
 DELIMITER ;
@@ -311,13 +305,13 @@ DELIMITER $$
 CREATE PROCEDURE sp_ListarTicketSoportes()
     BEGIN
         SELECT TS.ticketSoporteId, TS.descripcionTicket, TS.estatus,
-        CONCAT("ID: ",C.clienteId," | ", C.nombre," ", C.apellido) AS Cliente,TS.facturaId FROM TicketSoportes TS
+        CONCAT("Datos del Cliente : ", "ID : ", C.clienteId, " ", C.nombre, " ", C.apellido, " Nit : ", C.nit) AS Cliente, TS.facturaId FROM TicketSoportes TS
         JOIN Clientes C on TS.clienteId = C.clienteId
         ;
     END$$
 
 DELIMITER ;
-
+ 
 DELIMITER $$
  
 CREATE PROCEDURE sp_BuscarTicketSoportes(IN ticSopId INT)
@@ -368,7 +362,7 @@ DELIMITER $$
 
 CREATE PROCEDURE sp_AgregarDistribuidores(IN nomDis VARCHAR(30), IN dirDis VARCHAR(200), IN ntDis VARCHAR(15), IN telDis VARCHAR(15), IN wb VARCHAR(50))
     BEGIN
-        INSERT INTO Clientes (nombreDistribuidor, direccionDistribuidor, nitDistribuidor, telefonoDistribuidor, web)
+        INSERT INTO Distribuidores (nombreDistribuidor, direccionDistribuidor, nitDistribuidor, telefonoDistribuidor, web)
             VALUES (nomDis, dirDis, ntDis, telDis, wb);
      END$$
 
@@ -460,6 +454,8 @@ CREATE PROCEDURE sp_ListarCategoriaProductos()
     END$$
 
 DELIMITER ;
+
+
  
 DELIMITER $$
  
@@ -504,88 +500,64 @@ DELIMITER ;
 -- ********************************** PRODUCTOS ********************************** --
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_AgregarProductos(IN nomPro VARCHAR(50), IN desPro VARCHAR(100), IN canSto INT, IN preVenUni DECIMAL(10,2), IN preVenMay DECIMAL(10,2), IN preCom DECIMAL(10,2), IN imaPro BLOB, IN disId INT, IN catProId INT)
-    BEGIN
-        INSERT INTO Productos (nombreProducto, descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor, precioCompra, imagenProducto, distribuidorId, categoriaProductoId)
-            VALUES (nomPro, desPro, canSto, preVenUni, preVenMay, preCom, imaPro, disId, catProId);
-     END$$
-
+CREATE PROCEDURE sp_AgregarProductos(nomP VARCHAR(50), descP VARCHAR(100), cantStock INT, precioVenta DECIMAL(10,2), precioVentaM DECIMAL(10,2), precioComp DECIMAL(10,2), imgP longblob, distId INT, cateId INT)
+BEGIN
+	INSERT INTO Productos(nombreProducto, descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor, precioCompra, imagenProducto, distribuidorId, categoriaProductoId)
+	VALUES (nomP, descP, cantStock, precioVenta, precioVentaM, precioComp, imgP, distId, cateId);
+END$$
 DELIMITER ;
 
-DELIMITER $$
 
+
+DELIMITER $$
 CREATE PROCEDURE sp_ListarProductos()
-    BEGIN
-        SELECT
-			Productos.productoId,
-            Productos.nombreProducto,
-            Productos.descripcionProducto,
-            Productos.cantidadStock,
-            Productos.precioVentaUnitario,
-            Productos.precioVentaMayor,
-            Productos.precioCompra,
-            Productos.imagenProducto,
-            Productos.distribuidorId,
-            Productos.categoriaProductoId
-                FROM Productos;
-    END$$
+BEGIN
+	SELECT Productos.productoId, Productos.nombreProducto, Productos.descripcionProducto, Productos.cantidadStock, Productos.precioVentaUnitario, Productos.precioVentaMayor,  Productos.precioCompra,Productos.imagenProducto, 
+       CONCAT("Distribuidor: ", D.nombreDistribuidor) AS distribuidor,
+       CONCAT("Categoría: ", CP.nombreCategoria) AS categoria
+	FROM Productos
+	LEFT JOIN Distribuidores D ON Productos.distribuidorId = D.distribuidorId
+	LEFT JOIN CategoriaProductos CP ON Productos.categoriaProductoId = CP.categoriaProductoId;
 
+END$$
 DELIMITER ;
- 
-DELIMITER $$
- 
-CREATE PROCEDURE sp_BuscarProductos(IN proId INT)
-	BEGIN
-		SELECT
-            Productos.productoId,
-            Productos.nombreProducto,
-            Productos.descripcionProducto,
-            Productos.cantidadStock,
-            Productos.precioVentaUnitario,
-            Productos.precioVentaMayor,
-            Productos.precioCompra,
-            Productos.imagenProducto,
-            Productos.distribuidorId,
-            Productos.categoriaProductoId
-				FROM Productos
-					WHERE productoId = proId;
 
-	END$$
-
-DELIMITER ;
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EliminarProductos(IN proId INT)
-
-	BEGIN
-		DELETE FROM Productos
-			WHERE productoId = proId;
-
-	END$$
-
+CREATE PROCEDURE sp_EliminarProducto(IN prodId INT)
+BEGIN
+	DELETE FROM Productos 
+		WHERE productoId = prodId;
+END$$
 DELIMITER ;
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EditarProductos(IN proId INT, IN nomPro VARCHAR(50), IN desPro VARCHAR(100), IN canSto INT, IN preVenUni DECIMAL(10,2), IN preVenMay DECIMAL(10,2), IN preCom DECIMAL(10,2), IN imaPro BLOB, IN disId INT, IN catProId INT)
-	BEGIN
-		UPDATE Productos
-			SET
-				nombreProducto = nomPro,
-				descripcionProducto = desPro,
-				cantidadStock = canSto,
-				precioVentaUnitario = preVenUni,
-				precioVentaMayor = preVenMay,
-                precioCompra = preCom,
-                imagenProducto = imaPro,
-                distribuidorId = disId,
-                categoriaProductoId = catProId
-					WHERE productoId = proId;
-	END$$
-
+CREATE PROCEDURE sp_BuscarProducto(IN prodId INT)
+BEGIN
+	SELECT Productos.productoId, Productos.nombreProducto, Productos.descripcionProducto, Productos.cantidadStock, Productos.precioVentaUnitario, Productos.precioVentaMayor,  Productos.precioCompra,Productos.imagenProducto, 
+       CONCAT("Distribuidor: ", D.nombreDistribuidor) AS distribuidor,
+       CONCAT("Categoría: ", CP.nombreCategoria) AS categoria
+		FROM Productos
+		LEFT JOIN Distribuidores D ON Productos.distribuidorId = D.distribuidorId
+		LEFT JOIN CategoriaProductos CP ON Productos.categoriaProductoId = CP.categoriaProductoId
+		WHERE productoId = prodId;
+END$$
 DELIMITER ;
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_EditarProducto(IN prodId INT, IN nomP VARCHAR(50), IN descP VARCHAR(100), IN cantStock INT, IN precioVenta DECIMAL(10,2), IN precioVentaM DECIMAL(10,2), IN precioComp DECIMAL(10,2), IN imgP longblob, IN distId INT, IN catId INT)
+BEGIN
+	UPDATE Productos 
+	SET nombreProducto = nomP, descripcionProducto = descP, cantidadStock = cantStock, precioVentaUnitario = precioVenta, precioVentaMayor = precioVentaM, precioCompra = precioComp, imagenProducto = imgP, distribuidorId = distId, categoriaproductosId = catId 
+    WHERE productoId = prodId;
+END$$
+DELIMITER ;
+
+
+
 
 -- ********************************** PROMOCIONES ********************************** --
 
@@ -602,34 +574,41 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE PROCEDURE sp_ListarPromociones()
-    BEGIN
-        SELECT
-			Promociones.promocionId,
-            Promociones.precioPromocion,
-            Promociones.descripcionPromocion,
-            Promociones.fechaInicio,
-            Promociones.fechaFinalizacion,
-            Promociones.productoId
-                FROM Promociones;
-    END$$
+BEGIN
+    SELECT 
+		PR.promocionId, 
+		PR.precioPromocion, 
+		PR.descripcionPromocion, 
+		PR.fechaInicio, 
+		PR.fechaFinalizacion, 
+		CONCAT("Id: ", P.productoId," | ", P.nombreProducto) AS Producto
+		
+	FROM 
+		Promociones PR
+	JOIN 
+		Productos P ON PR.productoId = P.productoId;
+
+END$$
 
 DELIMITER ;
  
 DELIMITER $$
  
-CREATE PROCEDURE sp_BuscarPromociones(IN promoId INT)
-	BEGIN
-		SELECT
-            Promociones.promocionId,
-            Promociones.precioPromocion,
-            Promociones.descripcionPromocion,
-            Promociones.fechaInicio,
-            Promociones.fechaFinalizacion,
-            Promociones.productoId
-				FROM Promociones
-					WHERE promocionId = promoId;
-
-	END$$
+CREATE PROCEDURE sp_BuscarPromocion(IN promId INT)
+BEGIN
+    SELECT 
+		PR.promocionId, 
+		PR.precioPromocion, 
+		PR.descripcionPromocion, 
+		PR.fechaInicio, 
+		PR.fechaFinalizacion, 
+		CONCAT("Id: ", P.productoId," | ", P.nombreProducto) AS Producto
+	FROM 
+		Promociones PR
+	JOIN 
+		Productos P ON PR.productoId = P.productoId
+	WHERE promocionId = promId;
+END$$
 
 DELIMITER ;
 
@@ -664,199 +643,216 @@ DELIMITER ;
 -- ********************************** DETALLE FACTURAS ********************************** --
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_AgregarDetalleFacturas(IN facId INT, IN proId INT)
-    BEGIN
-        INSERT INTO DetalleFacturas (facturaId, productoId)
-            VALUES (facId, proId);
-     END$$
-
+CREATE PROCEDURE sp_AgregarDetalleFactura(prodIdFact INT, factIdFact INT)
+BEGIN
+    INSERT INTO detalleFactura(productoId, facturaId)
+    VALUES (prodIdFact, factIdFact);
+END$$
 DELIMITER ;
+
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_ListarDetalleFacturas()
-    BEGIN
-        SELECT
-			DetalleFacturas.detalleFacturaId,
-            DetalleFacturas.facId,
-            DetalleFacturas.proId
-                FROM DetalleFacturas;
-    END$$
-
+CREATE PROCEDURE sp_ListarDetalleFactura()
+BEGIN
+    SELECT detalleFacturaId, 
+        productoId, 
+        facturaId
+    FROM detalleFactura;
+END$$
 DELIMITER ;
- 
-DELIMITER $$
- 
-CREATE PROCEDURE sp_BuscarDetalleFacturas(IN detFacId INT)
-	BEGIN
-		SELECT
-            DetalleFacturas.detalleFacturaId,
-            DetalleFacturas.facId,
-            DetalleFacturas.proId
-				FROM DetalleFacturas
-					WHERE detalleFacturaId = detFacId;
 
-	END$$
 
-DELIMITER ;
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EliminarDetalleFacturas(IN detFacId INT)
-
-	BEGIN
-		DELETE FROM DetalleFacturas
-			WHERE detalleFacturaId = detFacId;
-
-	END$$
-
+CREATE PROCEDURE sp_EliminarDetalleFactura(IN detFactId INT)
+BEGIN
+    DELETE FROM detalleFactura 
+    WHERE detalleFacturaId = detFactId;
+END$$
 DELIMITER ;
+
+
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EditarDetalleFacturas(IN detFacId INT, IN facId INT, IN proId INT)
-	BEGIN
-		UPDATE DetalleFacturas
-			SET
-				facturaId = facId,
-				productoId = proId
-					WHERE detalleFacturaId = detFacId;
-	END$$
-
+CREATE PROCEDURE sp_BuscarDetalleFactura(IN detFactId INT)
+BEGIN
+    SELECT detalleFacturaId, 
+        productoId, 
+        facturaId
+    FROM detalleFactura 
+    WHERE detalleFacturaId = detFactId;
+END$$
 DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_EditarDetalleFactura(IN detFactId INT, IN prodIdFact INT, IN factIdFact INT)
+BEGIN
+    UPDATE detalleFactura
+    SET productoId = prodIdFact, facturaId = factIdFact
+    WHERE detalleFacturaId = detFactId;
+END$$
+DELIMITER ;
+
 
 -- ********************************** COMPRAS ********************************** --
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_AgregarCompras(IN fecCom DATE, IN totCom DECIMAL(10,2))
-    BEGIN
-        INSERT INTO Compras (fechaCompra, totalCompra)
-            VALUES (fecCom, totCom);
-     END$$
-
+CREATE PROCEDURE sp_AgregarCompra()
+BEGIN
+    INSERT INTO Compras(fechaCompra)
+    VALUES (curdate());
+END$$
 DELIMITER ;
 
-DELIMITER $$
 
+
+DELIMITER $$
 CREATE PROCEDURE sp_ListarCompras()
-    BEGIN
-        SELECT
-			Compras.compraId,
-            Compras.fechaCompra,
-            Compras.totalCompra
-                FROM Compras;
-    END$$
-
+BEGIN
+    SELECT compraId, 
+		fechaCompra, 
+		totalCompra
+	FROM Compras;
+END$$
 DELIMITER ;
- 
-DELIMITER $$
- 
-CREATE PROCEDURE sp_BuscarCompras(IN comId INT)
-	BEGIN
-		SELECT
-            Compras.compraId,
-            Compras.fechaCompra,
-            Compras.totalCompra
-				FROM Compras
-					WHERE compraId = comId;
+CALL sp_ListarCompras();
 
-	END$$
 
-DELIMITER ;
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EliminarCompras(IN comId INT)
-
-	BEGIN
-		DELETE FROM Compras
-			WHERE compraId = comId;
-
-	END$$
-
+CREATE PROCEDURE sp_EliminarCompra(IN compId INT)
+BEGIN
+    DELETE FROM Compras 
+    WHERE compraId = compId;
+END$$
 DELIMITER ;
+
+
+
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_EditarCompras(IN comId INT, IN fecCom DATE, IN totCom DECIMAL(10,2))
-	BEGIN
-		UPDATE Compras
-			SET
-				fechaCompra = fecCom,
-				totalCompra = totCom
-					WHERE compraId = comId;
-	END$$
-
+CREATE PROCEDURE sp_BuscarCompra(IN compId INT)
+BEGIN
+    SELECT compraId, 
+		fechaCompra, 
+		totalCompra
+	FROM Compras 
+	WHERE compraId = compId;
+END$$
 DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_EditarCompra(IN compId INT, IN fechaComp DATE)
+BEGIN
+    UPDATE Compras
+    SET fechaCompra = fechaComp
+    WHERE compraId = compId;
+END$$
+DELIMITER ;
+
+
 
 -- ********************************** DETALLE COMPRAS ********************************** --
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_AgregarDetalleCompras(IN canCom INT, IN proId INT, IN comId INT)
-    BEGIN
-        INSERT INTO DetalleCompras (cantidadCompra, productoId, compraId)
-            VALUES (canCom, proId, comId);
-     END$$
-
+CREATE PROCEDURE sp_AgregarDetalleCompra(cantComp INT, prodIdComp INT, compId INT)
+BEGIN
+    INSERT INTO detalleCompra(cantidadCompra, productoId, compraId)
+    VALUES (cantComp, prodIdComp, compId);
+END$$
 DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_ListarDetalleCompra()
+BEGIN
+    SELECT detalleCompraId, 
+		cantidadCompra, 
+		productoId, 
+		compraId
+	FROM detalleCompra;
+END$$
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_EliminarDetalleCompra(IN detCompId INT)
+BEGIN
+    DELETE FROM detalleCompra 
+    WHERE detalleCompraId = detCompId;
+END$$
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_BuscarDetalleCompra(IN detCompId INT)
+BEGIN
+    SELECT detalleCompraId, 
+		cantidadCompra, 
+		productoId, 
+		compraId
+	FROM detalleCompra 
+	WHERE detalleCompraId = detCompId;
+END$$
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_EditarDetalleCompra(IN detCompId INT, IN cantComp INT, IN prodIdComp INT, IN compId INT)
+BEGIN
+    UPDATE detalleCompra
+    SET cantidadCompra = cantComp, productoId = prodIdComp, compraId = compId
+    WHERE detalleCompraId = detCompId;
+END$$
+DELIMITER ;
+
+-- ******* LOGIN ******* --
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_ListarDetalleCompras()
-    BEGIN
-        SELECT
-			DetalleCompras.detalleCompraId,
-            DetalleCompras.cantidadCompra,
-            DetalleCompras.productoId,
-            DetalleCompras.compraId
-                FROM DetalleCompras;
-    END$$
-
-DELIMITER ;
- 
-DELIMITER $$
- 
-CREATE PROCEDURE sp_BuscarDetalleCompras(IN detComId INT)
-	BEGIN
-		SELECT
-            DetalleCompras.detalleCompraId,
-            DetalleCompras.cantidadCompra,
-            DetalleCompras.productoId,
-            DetalleCompras.compraId
-				FROM DetalleCompras
-					WHERE detalleCompraId = detComId;
-
-	END$$
+CREATE PROCEDURE sp_agregarUsuario(
+    IN us VARCHAR(30), IN con VARCHAR(100), IN nivAccId INT, IN emp INT)
+BEGIN
+    INSERT INTO Usuarios(usuario, contrasenia, nivelAccesoId, empleadoId) 
+    VALUES (us, con, nivAccId, emp);
+END $$
 
 DELIMITER ;
 
-DELIMITER $$
+Delimiter $$
+create procedure sp_buscarUsuario(us varchar(30))
+begin
+	select * from Usuarios
+		where usuario = us;
+end $$
+delimiter ;
 
-CREATE PROCEDURE sp_EliminarDetalleCompras(IN detComId INT)
 
-	BEGIN
-		DELETE FROM DetalleCompras
-			WHERE detalleCompraId = detComId;
+Delimiter $$
+create procedure sp_listarNivelAcceso()
+begin
+	select * from nivelesAcceso;
+end $$
+delimiter ;
+select * from Usuarios;
 
-	END$$
 
-DELIMITER ;
-
-DELIMITER $$
-
-CREATE PROCEDURE sp_EditarDetalleCompras(IN detComId INT, IN canCom INT, IN proId INT, IN comId INT)
-	BEGIN
-		UPDATE DetalleCompras
-			SET
-				cantidadCompra = canCom,
-				productoId = proId,
-				compraId = comId
-					WHERE detalleCompraId = detComId;
-	END$$
-
-DELIMITER ;
 
 set global time_zone = '-6:00';
