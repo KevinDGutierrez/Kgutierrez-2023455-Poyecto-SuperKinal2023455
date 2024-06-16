@@ -149,7 +149,7 @@ public class FormPromocionesController implements Initializable {
     public void editarPromocion(){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "CALL sp_EditarPromocion(?,?,?,?,?,?)";
+            String sql = "CALL sp_EditarPromociones(?,?,?,?,?,?)";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(tfPromocionId.getText()));
             statement.setString(2, tfPrecio.getText());

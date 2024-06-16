@@ -144,7 +144,7 @@ public class MenuPromocionesController implements Initializable {
     public void eliminarPromocion(int promId){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "CALL sp_EliminarPromocion(?)";
+            String sql = "CALL sp_EliminarPromociones(?)";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1,promId);
             statement.execute();
